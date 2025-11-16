@@ -1,0 +1,15 @@
+mode: live   # dummy | backtest | live
+
+zerodha:
+  api_key: "YOUR_API_KEY"
+  access_token: "YOUR_ACCESS_TOKEN"   # or leave blank and use env vars
+
+universe:
+  instruments:
+    - 256265    # NIFTY index token (example)
+    - 260105    # BANK-NIFTY (example)
+
+backtest:
+  start: "2024-10-01"
+  end: "2024-10-07"
+  interval: "minute"

@@ -23,11 +23,11 @@ class AppConfig:
     backtest_interval: str = "minute"
 
     @staticmethod
-    def from_yaml(path: str, override_mode: Optional[str] = None) -> "AppConfig":
+    def from_yaml(path: str) -> "AppConfig":
         with open(path, "r") as f:
             data = yaml.safe_load(f) or {}
 
-        raw_mode: str = override_mode or data.get("mode", "dummy")
+        raw_mode: str = data.get("mode", "dummy")
 
         if raw_mode not in ("dummy", "backtest", "live"):
             raise ValueError(f"Invalid mode in config/CLI: {raw_mode}")

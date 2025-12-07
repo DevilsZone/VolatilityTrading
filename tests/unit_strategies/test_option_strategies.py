@@ -10,7 +10,7 @@ class TestOptionStrategies(unittest.TestCase):
     def test_straddle_entry(self):
         strat = HighVolLongStraddleStrategy(underlying_token=123, entry_threshold=0.5)
         
-        state = MarketState(last_ticks={}, recent_candles={}, positions={}, timestamp=None)
+        state = MarketState(last_ticks={}, recent_candles={}, positions={}, timestamp=0.0)
         state.last_ticks[123] = Tick(123, datetime.now(), 100.0, 100)
         
         # Signal VOL_UP with 0.8 strength
@@ -29,7 +29,7 @@ class TestOptionStrategies(unittest.TestCase):
         strat.position_open = True
         strat.last_strike = 100.0
         
-        state = MarketState(last_ticks={}, recent_candles={}, positions={}, timestamp=None)
+        state = MarketState(last_ticks={}, recent_candles={}, positions={}, timestamp=0.0)
         state.last_ticks[123] = Tick(123, datetime.now(), 100.0, 100)
         
         # Signal VOL_DOWN with 0.2 strength (below exit threshold of 0.4 implies? No, wait)

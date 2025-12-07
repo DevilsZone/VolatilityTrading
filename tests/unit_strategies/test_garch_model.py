@@ -15,7 +15,7 @@ class TestGARCHVolModel(unittest.TestCase):
         expected_long_run_var = omega / (1 - alpha - beta)
         self.assertAlmostEqual(model.current_variance, expected_long_run_var, places=6)
         
-        state = MarketState(last_ticks={}, recent_candles={}, positions={}, timestamp=None)
+        state = MarketState(last_ticks={}, recent_candles={}, positions={}, timestamp=0.0)
         t1 = Tick(123, datetime.now(), 100.0, 100)
         state.last_ticks[123] = t1
         model.update(state)

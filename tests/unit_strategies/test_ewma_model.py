@@ -7,7 +7,7 @@ from core.domain.types import Tick
 class TestEWMAVolModel(unittest.TestCase):
     def test_update_variance(self):
         model = EWMAVolModel(instrument_token=123, decay_factor=0.9, annualize_factor=1.0)
-        state = MarketState(last_ticks={}, recent_candles={}, positions={}, timestamp=None)
+        state = MarketState(last_ticks={}, recent_candles={}, positions={}, timestamp=0.0)
         
         # 1. First tick (sets last_price)
         t1 = Tick(123, datetime.now(), 100.0, 100)
@@ -29,7 +29,7 @@ class TestEWMAVolModel(unittest.TestCase):
     def test_signal_emission(self):
         # Set high threshold low to force signal
         model = EWMAVolModel(instrument_token=123, high_threshold=0.0001, annualize_factor=1.0)
-        state = MarketState(last_ticks={}, recent_candles={}, positions={}, timestamp=None)
+        state = MarketState(last_ticks={}, recent_candles={}, positions={}, timestamp=0.0)
         
         t1 = Tick(123, datetime.now(), 100.0, 100)
         state.last_ticks[123] = t1

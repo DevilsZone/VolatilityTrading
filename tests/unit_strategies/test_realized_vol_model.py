@@ -7,7 +7,7 @@ from core.domain.types import Tick
 class TestRealizedVolModel(unittest.TestCase):
     def test_vol_calculation(self):
         model = RealizedVolModel(instrument_token=123, lookback=5, annualize_factor=1.0)
-        state = MarketState(last_ticks={}, recent_candles={}, positions={}, timestamp=None)
+        state = MarketState(last_ticks={}, recent_candles={}, positions={}, timestamp=0.0)
         
         # Feed prices 100, 101, 102, 103, 104, 105
         # return approx 1% each step
@@ -31,7 +31,7 @@ class TestRealizedVolModel(unittest.TestCase):
     def test_vol_signal_trigger(self):
         # Thresholds: High=0.01, Low=0.003
         model = RealizedVolModel(instrument_token=123, lookback=3, high_threshold=0.01, annualize_factor=1.0)
-        state = MarketState(last_ticks={}, recent_candles={}, positions={}, timestamp=None)
+        state = MarketState(last_ticks={}, recent_candles={}, positions={}, timestamp=0.0)
         
         # Volatile sequence
         prices = [100.0, 105.0, 100.0, 105.0] # ~5% returns, high vol

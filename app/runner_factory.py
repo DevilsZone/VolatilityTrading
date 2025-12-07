@@ -119,16 +119,28 @@ class RunnerFactory:
         
         feed.subscribe(config.instruments)
 
+        from strategies.vol_models.ewma_vol_model import EWMAVolModel
+        from strategies.vol_models.garch_vol_model import GARCHVolModel
+
         # 2. Vol Models (Live)
-        vol_models = [
-            RealizedVolModel(
+        vol_models = []
+        for token in config.instruments:
+            # Realized Vol (Rolling Window)
+            vol_models.append(RealizedVolModel(
                 instrument_token=token,
                 lookback=30,
                 high_threshold=0.01,
                 low_threshold=0.003
-            )
-            for token in config.instruments
-        ]
+            ))
+            # EWMA
+            vol_models.append(EWMAVolModel(
+                instrument_token=token,
+                decay_factor=0.94
+            ))
+            # GARCH
+            vol_models.append(GARCHVolModel(
+                instrument_token=token
+            ))
 
         # 3. Strategies
         strategies = []

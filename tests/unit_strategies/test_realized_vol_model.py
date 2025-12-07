@@ -15,6 +15,7 @@ class TestRealizedVolModel(unittest.TestCase):
         for p in prices:
             t = Tick(123, datetime.now(), float(p), 100)
             state.last_ticks[123] = t
+            model.update(state)
             
         # Should have enough data now
         # model._prices should have 6 items

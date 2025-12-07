@@ -1,3 +1,6 @@
+"""
+The runner module orchestrates the entire trading loop.
+"""
 # core/engine/runner.py
 
 from typing import List

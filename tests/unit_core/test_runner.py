@@ -1,14 +1,18 @@
+"""
+Unit tests for the core engine and runner.
+"""
 import unittest
+from datetime import datetime
 from unittest.mock import MagicMock
 from core.engine.runner import Engine
 from core.domain.types import Tick
 from core.domain.actions import TradeAction
 from core.domain.signals import VolSignal
 
-from datetime import datetime
-
 class TestRunner(unittest.TestCase):
+    """Tests for the Runner (Engine) class orchestration and logic."""
     def test_run_orchestration(self):
+        """Tests the main run loop orchestration with mocked components."""
         # Mocks
         feed = MagicMock()
         broker = MagicMock()
@@ -24,11 +28,11 @@ class TestRunner(unittest.TestCase):
         broker.get_positions.return_value = []
         
         # Setup VolModel
-        sig = VolSignal(123, "VOL_UP", 0.5, 1000)
+        sig = VolSignal(123, "VOL_UP", 0.5, datetime.now())
         vol_model.update.return_value = sig
         
         # Setup Strategy
-        action = TradeAction("BUY", 123, 1, {})
+        action = TradeAction("BUY", 123, 1, price=None, metadata={})
         strategy.on_tick.return_value = []
         strategy.on_vol_signal.return_value = [action]
         

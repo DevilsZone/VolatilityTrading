@@ -1,3 +1,6 @@
+"""
+Realized volatility model implementation.
+"""
 # strategies/vol_models/realized_vol_model.py
 
 from collections import deque
@@ -47,6 +50,7 @@ class RealizedVolModel(VolatilityModel):
         self._prices: Deque[float] = deque(maxlen=lookback + 1)
 
     def update(self, state: MarketState) -> Optional[VolSignal]:
+        """Compute realized vol from recent prices."""
         tick = state.last_ticks.get(self.instrument_token)
         if tick is None:
             return None

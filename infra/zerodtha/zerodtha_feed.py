@@ -1,3 +1,6 @@
+"""
+Zerodha implementation of the MarketDataFeed.
+"""
 import logging
 import queue
 from typing import Iterable, List
@@ -11,6 +14,7 @@ logger = logging.getLogger(__name__)
 
 
 class ZerodhaFeed(MarketDataFeed):
+    """Real-time market data feed using Zerodha Kite Ticker."""
     def __init__(self, api_key: str, access_token: str):
         self.kws = KiteTicker(api_key, access_token)
         self.tick_queue = queue.Queue()
@@ -23,6 +27,7 @@ class ZerodhaFeed(MarketDataFeed):
         self.kws.on_error = self._on_error
 
     def subscribe(self, instruments: List[int]) -> None:
+        """Subscribe to a list of instruments."""
         self.subscribed_tokens = instruments
         # If already connected, subscribe immediately
         if self.kws.is_connected():
@@ -65,8 +70,8 @@ class ZerodhaFeed(MarketDataFeed):
 
     @staticmethod
     def _on_close(ws, code, reason):
-        logger.warning(f"Zerodha Ticker closed: {code} - {reason}")
+        logger.warning("Zerodha Ticker closed: %s - %s", code, reason)
 
     @staticmethod
     def _on_error(ws, code, reason):
-        logger.error(f"Zerodha Ticker error: {code} - {reason}")
+        logger.error("Zerodha Ticker error: %s - %s", code, reason)

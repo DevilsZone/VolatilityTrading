@@ -1,3 +1,6 @@
+"""
+Strategy implementation: High volatility long straddle.
+"""
 from typing import List, Optional
 
 from core.ports.strategy import Strategy, StrategyContext
@@ -33,12 +36,14 @@ class HighVolLongStraddleStrategy(Strategy):
         self.last_strike: Optional[float] = None
 
     def _get_relevant_signal(self, ctx: StrategyContext) -> Optional[VolSignal]:
+        """Retrieve the volatility signal for the underlying token."""
         for sig in ctx.vol_signals:
             if sig.instrument_token == self.underlying_token:
                 return sig
         return None
 
     def on_vol_signal(self, ctx: StrategyContext) -> List[TradeAction]:
+        """React to a volatility signal."""
         actions: List[TradeAction] = []
         sig = self._get_relevant_signal(ctx)
         if not sig:
@@ -113,5 +118,6 @@ class HighVolLongStraddleStrategy(Strategy):
         return actions
 
     def on_tick(self, ctx: StrategyContext) -> List[TradeAction]:
+        """React to market tick updates (not implemented)."""
         # For now, no per-tick management (SL/TP).
         return []

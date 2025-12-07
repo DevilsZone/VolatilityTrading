@@ -1,3 +1,6 @@
+"""
+Bollinger Band volatility model implementation.
+"""
 # strategies/vol_models/bollinger_vol_model.py
 
 from collections import deque
@@ -34,6 +37,7 @@ class BollingerVolModel(VolatilityModel):
         self._closes = deque(maxlen=period)
 
     def update(self, state: MarketState) -> Optional[VolSignal]:
+        """Compute bandwidth-based vol signal."""
         candles = state.recent_candles.get(self.instrument_token)
         if not candles:
             return None

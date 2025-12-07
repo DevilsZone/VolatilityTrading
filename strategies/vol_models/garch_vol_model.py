@@ -1,3 +1,6 @@
+"""
+GARCH (1,1) volatility model implementation.
+"""
 from datetime import datetime
 from math import log, sqrt
 from typing import Optional
@@ -40,6 +43,7 @@ class GARCHVolModel(VolatilityModel):
         self.initialized = False
 
     def update(self, state: MarketState) -> Optional[VolSignal]:
+        """Compute GARCH variance update."""
         tick = state.last_ticks.get(self.instrument_token)
         if not tick or tick.last_price is None or tick.last_price <= 0:
             return None

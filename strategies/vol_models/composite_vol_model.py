@@ -1,3 +1,6 @@
+"""
+Composite volatility model (aggregation).
+"""
 # strategies/vol_models/composite_vol_model.py
 
 from typing import Optional, Iterable
@@ -23,6 +26,7 @@ class CompositeVolModel(VolatilityModel):
         )
 
     def update(self, state: MarketState) -> Optional[VolSignal]:
+        """Aggregate signals from child models."""
         ups = []
         downs = []
 

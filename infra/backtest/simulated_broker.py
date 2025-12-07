@@ -1,3 +1,6 @@
+"""
+Simulated broker for backtesting.
+"""
 import uuid
 from typing import List
 from datetime import datetime, timezone
@@ -17,6 +20,7 @@ class SimulatedBroker(Broker):
         self.pending_orders = {}    # order_id → OrderRequest
 
     def place_order(self, order: OrderRequest) -> OrderExecutionReport:
+        """Simulate placing an order."""
         order_id = str(uuid.uuid4())
 
         report = OrderExecutionReport(
@@ -32,6 +36,7 @@ class SimulatedBroker(Broker):
         return report
 
     def modify_order(self, order_id: str, **kwargs) -> OrderExecutionReport:
+        """Simulate modifying an order."""
         order = self.pending_orders.get(order_id)
         if order:
             for key, value in kwargs.items():
@@ -40,12 +45,14 @@ class SimulatedBroker(Broker):
         return self.orders[order_id]
 
     def cancel_order(self, order_id: str) -> None:
+        """Simulate cancelling an order."""
         if order_id in self.pending_orders:
             del self.pending_orders[order_id]
         if order_id in self.orders:
             self.orders[order_id].status = "CANCELLED"
 
     def get_positions(self) -> List[Position]:
+        """Return simulated positions."""
         return list(self.positions.values())
 
     # ------------ CALLED BY BACKTEST ENGINE -----------------

@@ -1,3 +1,6 @@
+"""
+Backtest implementation of the MarketDataFeed.
+"""
 # infra/backtest/backtest_feed.py
 
 from typing import Dict, List
@@ -6,12 +9,13 @@ from core.domain.types import Tick, Candle
 
 
 class BacktestFeed(MarketDataFeed):
+    """Feeds historical candles as ticks for backtesting."""
 
     def __init__(self, candles_by_token: Dict[int, List[Candle]]):
         self.candles_by_token = candles_by_token
 
     def subscribe(self, instruments):
-        pass
+        """No-op for backtest feed (pre-loaded data)."""
 
     def stream(self):
         """

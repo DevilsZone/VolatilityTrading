@@ -1,3 +1,6 @@
+"""
+ATR (Average True Range) volatility model implementation.
+"""
 # strategies/vol_models/atr_vol_model.py
 
 from collections import deque
@@ -33,6 +36,7 @@ class ATRVolModel(VolatilityModel):
         self._tr_values = deque(maxlen=period)
 
     def update(self, state: MarketState) -> Optional[VolSignal]:
+        """Compute ATR-based vol signal."""
         candles = state.recent_candles.get(self.instrument_token)
         if not candles or len(candles) < 2:
             return None

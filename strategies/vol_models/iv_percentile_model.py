@@ -1,3 +1,6 @@
+"""
+IV Percentile volatility model implementation.
+"""
 from typing import Optional
 
 from core.domain.state import MarketState
@@ -18,6 +21,7 @@ class IVPercentileModel(VolatilityModel):
         self.instrument_token = instrument_token
 
     def update(self, state: MarketState) -> Optional[VolSignal]:
+        """Compute IV percentile based vol signal (placeholder)."""
         # later this will compute:
         # percentile = rank(current_iv)
         # thresholds → VOL_UP / VOL_DOWN

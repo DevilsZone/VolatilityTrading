@@ -1,9 +1,13 @@
+"""
+Historical data provider using Zerodha Kite.
+"""
 # infra/backtest/historical_provider.py
 
 from datetime import datetime
 from kiteconnect import KiteConnect
 
 class ZerodhaHistoricalProvider:
+    """Fetches historical candles from Zerodha."""
 
     def __init__(self, api_key: str, access_token: str):
         self.kite = KiteConnect(api_key=api_key)

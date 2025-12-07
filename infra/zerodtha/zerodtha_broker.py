@@ -1,3 +1,6 @@
+"""
+Zerodha implementation of the Broker interface.
+"""
 from datetime import datetime, timezone
 from typing import List
 
@@ -8,6 +11,7 @@ from core.domain.types import OrderRequest, OrderExecutionReport, Position
 
 
 class ZerodhaBroker(Broker):
+    """Execution broker using Zerodha Kite Connect API."""
 
     def __init__(self, api_key: str, access_token: str):
         self.kite = KiteConnect(api_key=api_key)
@@ -16,6 +20,7 @@ class ZerodhaBroker(Broker):
         self.orders = {}  # order_id → OrderExecutionReport
 
     def place_order(self, order: OrderRequest) -> OrderExecutionReport:
+        """Place an order via Kite Connect."""
         transaction = order.transaction_type
         order_type = (
             self.kite.ORDER_TYPE_LIMIT if order.price else self.kite.ORDER_TYPE_MARKET
@@ -44,6 +49,7 @@ class ZerodhaBroker(Broker):
         return report
 
     def modify_order(self, order_id: str, **kwargs) -> OrderExecutionReport:
+        """Modify an existing order via Kite Connect."""
         self.kite.modify_order(
             variety=self.kite.VARIETY_REGULAR,
             order_id=order_id,
@@ -52,6 +58,7 @@ class ZerodhaBroker(Broker):
         return self.orders[order_id]
 
     def cancel_order(self, order_id: str) -> None:
+        """Cancel an order via Kite Connect."""
         self.kite.cancel_order(
             variety=self.kite.VARIETY_REGULAR,
             order_id=order_id
@@ -59,6 +66,7 @@ class ZerodhaBroker(Broker):
         self.orders[order_id].status = "CANCELLED"
 
     def get_positions(self) -> List[Position]:
+        """Fetch current positions from Zerodha."""
         net = self.kite.positions().get("net", [])
         results = []
 

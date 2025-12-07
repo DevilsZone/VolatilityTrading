@@ -1,3 +1,6 @@
+"""
+Backtest runner to execute strategies against historical data.
+"""
 # infra/backtest/backtest_runner.py
 
 from datetime import datetime
@@ -10,6 +13,7 @@ from core.engine.runner import Engine
 
 
 class BacktestRunner:
+    """Orchestrates a backtest run."""
 
     def __init__(self, api_key, access_token):
         self.provider = ZerodhaHistoricalProvider(api_key, access_token)
@@ -24,6 +28,7 @@ class BacktestRunner:
         strategies,
         risk_mgr
     ):
+        """Run the backtest simulation."""
 
         # 1. Fetch candles for all tokens
         candles_by_token = {}

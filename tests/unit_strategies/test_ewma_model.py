@@ -27,7 +27,7 @@ class TestEWMAVolModel(unittest.TestCase):
         self.assertGreater(model.current_variance, 0.0)
 
     def test_signal_emission(self):
-        # Set high threshold low to force signal
+        # Set a high threshold low to force a signal
         model = EWMAVolModel(instrument_token=123, high_threshold=0.0001, annualize_factor=1.0)
         state = MarketState(last_ticks={}, recent_candles={}, positions={}, timestamp=0.0)
         

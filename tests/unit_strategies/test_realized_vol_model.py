@@ -12,12 +12,9 @@ class TestRealizedVolModel(unittest.TestCase):
         # Feed prices 100, 101, 102, 103, 104, 105
         # return approx 1% each step
         prices = [100, 101, 102, 103, 104, 105]
-        
-        signal = None
         for p in prices:
             t = Tick(123, datetime.now(), float(p), 100)
             state.last_ticks[123] = t
-            signal = model.update(state)
             
         # Should have enough data now
         # model._prices should have 6 items

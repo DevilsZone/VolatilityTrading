@@ -32,8 +32,8 @@ class TestOptionStrategies(unittest.TestCase):
         state = MarketState(last_ticks={}, recent_candles={}, positions={}, timestamp=0.0)
         state.last_ticks[123] = Tick(123, datetime.now(), 100.0, 100)
         
-        # Signal VOL_DOWN with 0.2 strength (below exit threshold of 0.4 implies? No, wait)
-        # Strategy says: if sig.kind == "VOL_DOWN" and sig.strength <= self.exit_threshold
+        # Signal VOL_DOWN with 0.2 strength (below an exit threshold of 0.4 implies? No, wait)
+        # Strategy says: if sig.kind == "VOL_DOWN" and sig.strength <= self.exit_threshold,
         # Usually high-strength VOL_DOWN means VERY LOW VOL?
         # Let's check logic: (vol - low) / (high - low).
         # if vol <= low, strength=0. 
@@ -42,7 +42,7 @@ class TestOptionStrategies(unittest.TestCase):
         # And strength calc for VOL_DOWN: 
         #   RealizedVolModel code: if vol <= low: kind=VOL_DOWN. 
         #   Calculates strength based on the same denominator?
-        #   Code says: (vol - low) / denom. If vol < low, this is negative? 
+        #   Code says: (vol - low) / denominator. If vol < low, this is negative?
         #   Line 91: strength = max(0.0, min(1.0, strength))
         #   So if vol <= low, strength is 0.0. 
         #   Strategy check: if sig.kind == "VOL_DOWN" and sig.strength <= self.exit_threshold

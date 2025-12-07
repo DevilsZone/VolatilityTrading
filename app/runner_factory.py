@@ -18,6 +18,8 @@ from strategies.option_strategies.long_vol_short_condor import LowVolShortCondor
 
 # NEW
 from strategies.vol_models.realized_vol_model import RealizedVolModel
+from infra.zerodtha.zerodtha_broker import ZerodhaBroker
+from infra.zerodtha.zerodtha_feed import ZerodhaFeed
 
 
 class RunnerFactory:
@@ -111,4 +113,36 @@ class RunnerFactory:
 
     @staticmethod
     def _build_live(config):
-        raise NotImplementedError("Live trading will be implemented later.")
+        # 1. Init Broker & Feed
+        broker = ZerodhaBroker(config.api_key, config.access_token)
+        feed = ZerodhaFeed(config.api_key, config.access_token)
+        
+        feed.subscribe(config.instruments)
+
+        # 2. Vol Models (Live)
+        vol_models = [
+            RealizedVolModel(
+                instrument_token=token,
+                lookback=30,
+                high_threshold=0.01,
+                low_threshold=0.003
+            )
+            for token in config.instruments
+        ]
+
+        # 3. Strategies
+        strategies = []
+        for token in config.instruments:
+            strategies.append(HighVolLongStraddleStrategy(underlying_token=token))
+            strategies.append(LowVolShortCondorStrategy(underlying_token=token))
+
+        # 4. Risk Manager (Use Dummy for now, or real one if available)
+        risk_mgr = DummyRiskManager()
+
+        return Engine(
+            feed=feed,
+            broker=broker,
+            vol_models=vol_models,
+            strategies=strategies,
+            risk_mgr=risk_mgr,
+        )

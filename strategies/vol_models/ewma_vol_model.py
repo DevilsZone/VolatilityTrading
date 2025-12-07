@@ -9,7 +9,7 @@ from core.domain.signals import VolSignal
 
 class EWMAVolModel(VolatilityModel):
     """
-    Exponentially Weighted Moving Average (EWMA) Volatility Model.
+    Exponentially Weighted Moving Average (EMA) Volatility Model.
     Recursive formula:
       Variance_t = lambda * Variance_{t-1} + (1 - lambda) * Return_t^2
     """

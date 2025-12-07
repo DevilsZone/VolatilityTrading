@@ -18,7 +18,7 @@ class TestRunner(unittest.TestCase):
         
         # Setup Feed
         tick = Tick(123, datetime.now(), 100.0, 10) # Minimal tick
-        feed.stream.return_value = [tick] # Yield one tick then exit
+        feed.stream.return_value = [tick] # Yield one tick, then exit
         
         # Setup Broker
         broker.get_positions.return_value = []
@@ -37,7 +37,7 @@ class TestRunner(unittest.TestCase):
         
         engine = Engine(feed, broker, [vol_model], [strategy], risk_mgr)
         
-        # Capture print output? Or just verify calls
+        # Capture print output? Or just verify call
         # Run
         engine.run()
         

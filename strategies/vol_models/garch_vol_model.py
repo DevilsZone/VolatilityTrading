@@ -12,7 +12,7 @@ class GARCHVolModel(VolatilityModel):
     Simplified GARCH(1,1) Volatility Model.
     Formula:
       Sigma_t^2 = omega + alpha * epsilon_{t-1}^2 + beta * Sigma_{t-1}^2
-    where epsilon_{t-1} is the previous return (assuming mean return is approx 0 for high freq).
+    where epsilon_{t-1} is the previous return (assuming the mean return is approx 0 for high freq).
     """
 
     name = "garch_vol_model"

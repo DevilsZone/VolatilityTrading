@@ -148,7 +148,7 @@ class RunnerFactory:
             strategies.append(HighVolLongStraddleStrategy(underlying_token=token))
             strategies.append(LowVolShortCondorStrategy(underlying_token=token))
 
-        # 4. Risk Manager (Use Dummy for now, or real one if available)
+        # 4. Risk Manager (Use Dummy for now, or a real one if available)
         risk_mgr = DummyRiskManager()
 
         return Engine(

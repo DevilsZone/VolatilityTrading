@@ -32,8 +32,7 @@ class TestZerodhaFeed(unittest.TestCase):
         # Simulate on_ticks callback
         ticks = [{
             "instrument_token": 123, 
-            "last_price": 100.0, 
-            "volume": 1000, 
+            "last_price": 100.0,
             "timestamp": "2024-01-01",
             "volume": 500
         }]

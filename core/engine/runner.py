@@ -72,11 +72,11 @@ class Engine:
                 actions.extend(tick_actions)
 
                 # Reaction to vol signals
-                for sig in vol_signals:
+                for _ in vol_signals:
                     signal_actions = strategy.on_vol_signal(ctx)
                     actions.extend(signal_actions)
 
-            # ---- 6. Run actions through risk manager ----
+            # ---- 6. Run actions through a risk manager ----
             safe_actions = self.risk_mgr.filter_actions(actions)
 
             # ---- 7. (Step 1) DO NOT EXECUTE ORDERS YET ----

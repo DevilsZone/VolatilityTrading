@@ -2,7 +2,7 @@ import unittest
 from unittest.mock import MagicMock, patch
 import sys
 
-# Mock kiteconnect and yaml
+# Mock kiteconnect and YAML
 sys.modules["kiteconnect"] = MagicMock()
 sys.modules["yaml"] = MagicMock()
 
@@ -21,9 +21,9 @@ class TestRunnerFactory(unittest.TestCase):
     @patch("app.runner_factory.ZerodhaBroker")
     @patch("app.runner_factory.ZerodhaFeed")
     def test_build_live(self, MockFeed, MockBroker):
-        # Patch the imports inside _build_live if necessary, but since they are imported inside the method
+        # Patch the imports inside _build_live if necessary, but since they are imported inside the method,
         # and we are running test, we need to ensure the imports work. 
-        # The easiest way is to mock them via sys.modules or assumes dependencies exist.
+        # The easiest way is to mock them via sys.modules or assume dependencies exist.
         # Since we mocked them in decorator, let's see. 
         
         config = AppConfig(mode="live", instruments=[123], api_key="k", access_token="t")

@@ -1,6 +1,5 @@
 import unittest
 from datetime import datetime
-from math import log, sqrt
 from strategies.vol_models.realized_vol_model import RealizedVolModel
 from core.domain.state import MarketState
 from core.domain.types import Tick
@@ -11,7 +10,7 @@ class TestRealizedVolModel(unittest.TestCase):
         state = MarketState(last_ticks={}, recent_candles={}, positions={}, timestamp=None)
         
         # Feed prices 100, 101, 102, 103, 104, 105
-        # returns approx 1% each step
+        # return approx 1% each step
         prices = [100, 101, 102, 103, 104, 105]
         
         signal = None
@@ -25,7 +24,7 @@ class TestRealizedVolModel(unittest.TestCase):
         self.assertEqual(len(model._prices), 6)
         
         # Vol calculation happens. 
-        # Since steps are uniform ~1%, vol ~0. 
+        # Since steps are uniform ~1%, vol. ~0.
         # Wait, strictly constant return means variance is 0. 
         # Let's make it volatile: 100, 105, 100, 105
         

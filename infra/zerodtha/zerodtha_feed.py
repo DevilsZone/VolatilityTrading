@@ -31,7 +31,7 @@ class ZerodhaFeed(MarketDataFeed):
 
     def stream(self) -> Iterable[Tick]:
         # Start the ticker in a background thread (non-blocking connect)
-        # threaded=True allows it to run in background while we yield from queue
+        # threaded=True allows it to run in the background while we yield from the queue
         self.kws.connect(threaded=True)
 
         while True:
@@ -42,7 +42,7 @@ class ZerodhaFeed(MarketDataFeed):
     def _on_ticks(self, ws, ticks):
         for t in ticks:
             # Transform Kite tick to domain Tick
-            # Kite tick structure depends on mode (Full vs Quote). Assuming Full/Quote.
+            # Kite tick structure depends on the mode (Full vs. Quote). Assuming Full/Quote.
             # Common fields: instrument_token, last_price, volume, last_quantity, etc.
             
             # Defensive check for required fields if needed
@@ -63,8 +63,10 @@ class ZerodhaFeed(MarketDataFeed):
             ws.subscribe(self.subscribed_tokens)
             ws.set_mode(ws.MODE_FULL, self.subscribed_tokens)
 
-    def _on_close(self, ws, code, reason):
+    @staticmethod
+    def _on_close(ws, code, reason):
         logger.warning(f"Zerodha Ticker closed: {code} - {reason}")
 
-    def _on_error(self, ws, code, reason):
+    @staticmethod
+    def _on_error(ws, code, reason):
         logger.error(f"Zerodha Ticker error: {code} - {reason}")

@@ -11,7 +11,7 @@ class TestEventLoop(unittest.TestCase):
         state = loop.update_state_with_tick(tick)
         
         self.assertEqual(state.last_ticks[123], tick)
-        # recent_candles is not updated by ticks automatically in this simplified loop
+        # ticks do not update recent_candles automatically in this simplified loop
         # self.assertIn(123, state.recent_candles)
         
     def test_update_positions(self):

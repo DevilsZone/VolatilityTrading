@@ -1,7 +1,6 @@
 import unittest
 from datetime import datetime
 from strategies.option_strategies.high_vol_long_straddle import HighVolLongStraddleStrategy
-from strategies.option_strategies.long_vol_short_condor import LowVolShortCondorStrategy
 from core.ports.strategy import StrategyContext
 from core.domain.state import MarketState
 from core.domain.signals import VolSignal
@@ -35,14 +34,14 @@ class TestOptionStrategies(unittest.TestCase):
         
         # Signal VOL_DOWN with 0.2 strength (below exit threshold of 0.4 implies? No, wait)
         # Strategy says: if sig.kind == "VOL_DOWN" and sig.strength <= self.exit_threshold
-        # Usually high strength VOL_DOWN means VERY LOW VOL? 
+        # Usually high-strength VOL_DOWN means VERY LOW VOL?
         # Let's check logic: (vol - low) / (high - low).
         # if vol <= low, strength=0. 
-        # if vol is dropping, strength of VOL_UP drops. 
+        # if vol is dropping, the strength of VOL_UP drops.
         # But RealizedVolModel emits VOL_DOWN when vol <= low_threshold. 
         # And strength calc for VOL_DOWN: 
         #   RealizedVolModel code: if vol <= low: kind=VOL_DOWN. 
-        #   Calculates strength based on same denominator? 
+        #   Calculates strength based on the same denominator?
         #   Code says: (vol - low) / denom. If vol < low, this is negative? 
         #   Line 91: strength = max(0.0, min(1.0, strength))
         #   So if vol <= low, strength is 0.0. 

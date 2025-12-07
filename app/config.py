@@ -1,7 +1,7 @@
 # app/config.py
 
 from dataclasses import dataclass
-from typing import Literal, List, Optional, cast
+from typing import Literal, List, cast
 import os
 import yaml
 

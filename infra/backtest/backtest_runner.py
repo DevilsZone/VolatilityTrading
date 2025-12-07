@@ -48,11 +48,11 @@ class BacktestRunner:
 
             candles_by_token[token] = candles
 
-        # 2. Initialise feed & broker
+        # 2. Initialize feed & broker
         feed = BacktestFeed(candles_by_token)
         broker = SimulatedBroker()
 
-        # 3. Create engine & run
+        # 3. Create an engine and run
         engine = Engine(
             feed=feed,
             broker=broker,
